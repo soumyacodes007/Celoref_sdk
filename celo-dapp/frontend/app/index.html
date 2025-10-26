@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CeloRefer - Dashboard</title>
+    <link rel="stylesheet" href="../css/app.css?v=20">
+    <link rel="stylesheet" href="../css/badge-nft-bw.css?v=20">
+    <script src="https://cdn.jsdelivr.net/npm/ethers@6.7.0/dist/ethers.umd.min.js"></script>
+</head>
+<body>
+    <div class="main-wrapper">
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-container">
+                <div class="header-left">
+                    <a href="../index.html" class="logo-link">
+                        <div class="logo">
+                            <div class="logo-icon">CR</div>
+                            <div class="logo-text">
+                                <h1>CeloRefer</h1>
+                                <p>Decentralized Growth</p>
+                            </div>
+                        </div>
+                    </a>
+                    
+                    <!-- Navigation Tabs -->
+                    <nav class="nav-tabs">
+                        <button class="nav-tab active" data-tab="dashboard">
+                            <span class="nav-tab-icon"></span>
+                            <span>Dashboard</span>
+                        </button>
+                        <button class="nav-tab" data-tab="register">
+                            <span class="nav-tab-icon"></span>
+                            <span>Register</span>
+                        </button>
+                        <button class="nav-tab" data-tab="quests">
+                            <span class="nav-tab-icon"></span>
+                            <span>Quests</span>
+                        </button>
+                        <button class="nav-tab" data-tab="seasons">
+                            <span class="nav-tab-icon"></span>
+                            <span>Seasons</span>
+                        </button>
+                        <button class="nav-tab" data-tab="leaderboard">
+                            <span class="nav-tab-icon"></span>
+                            <span>Leaderboard</span>
+                        </button>
+                        <button class="nav-tab" data-tab="staking">
+                            <span class="nav-tab-icon"></span>
+                            <span>Staking</span>
+                        </button>
+                        <button class="nav-tab admin-only hidden" data-tab="admin">
+                            <span class="nav-tab-icon"></span>
+                            <span>Admin</span>
+                        </button>
+                    </nav>
+                </div>
+                
+                <div class="header-right">
+                    <button id="connectWallet" class="btn btn-connect">
+                        <span>Connect Wallet</span>
+                    </button>
+                    <div id="walletInfo" class="wallet-info hidden">
+                        <div class="wallet-network">
+                            <span class="network-dot"></span>
+                            <span id="networkName">Alfajores</span>
+                        </div>
+                        <div class="wallet-details">
+                            <div class="wallet-address" id="walletAddress"></div>
+                            <div class="wallet-balance" id="walletBalance">0 cUSD</div>
+                        </div>
+                        <button id="disconnectWallet" class="btn-disconnect" title="Disconnect wallet">
+                            <span>×</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Alert Messages -->
+        <div id="alertContainer"></div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+
+            <!-- Dashboard Tab -->
+            <section id="dashboard" class="tab-content active">
+                <br></br>
+                
+                <!-- Overview Section -->
+                <div class="dashboard-header">
+                    <div class="dashboard-status">
+                        <div class="status-indicator">
+                            <span class="status-label">Account Status</span>
+                            <span class="status-value" id="registrationStatus">Not Connected</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Key Metrics Grid -->
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <span class="metric-label">Total Referrals</span>
+                        </div>
+                        <div class="metric-value" id="totalReferrals">0</div>
+                        <div class="metric-change">Lifetime count</div>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <span class="metric-label">Total Earned</span>
+                        </div>
+                        <div class="metric-value" id="totalEarned">0 cUSD</div>
+                        <div class="metric-change">Cumulative rewards</div>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <span class="metric-label">Referral Code</span>
+                        </div>
+                        <div class="metric-value metric-code" id="referralCode">-</div>
+                        <button id="copyCodeBtn" class="btn btn-sm btn-secondary hidden" style="width: 100%; margin-top: 12px;">Copy Code</button>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <span class="metric-label">Total Actions</span>
+                        </div>
+                        <div class="metric-value" id="totalActions">0</div>
+                        <div class="metric-change">Activity count</div>
+                    </div>
+                </div>
+
+                <!-- Main Content Grid -->
+                <div class="dashboard-grid">
+                    <!-- Left Column -->
+                    <div class="dashboard-column">
+                        <!-- Badge Display -->
+                        <div class="card">
+                            <div class="card-header-row">
+                                <h3>Current Badge</h3>
+                                <button id="refreshBadgeBtn" class="btn btn-sm btn-secondary" onclick="refreshBadge()" title="Refresh badge from blockchain">
+                                    Refresh
+                                </button>
+                            </div>
+                            <div id="nftBadgeDisplay"></div>
+                            <div class="card-footer-note">
+                                <span id="lastRefreshTime">Auto-refreshes every 30 seconds</span>
+                            </div>
+                        </div>
+
+                        <!-- Referral Network -->
+                        <div class="card">
+                            <h3>Referral Network</h3>
+                            <p class="card-description">Your position in the referral tree</p>
+                            <div id="referralTree" class="referral-tree">
+                                <div class="tree-item">
+                                    <span class="tree-label">Direct Referrer</span>
+                                    <span class="tree-value" id="directReferrer">-</span>
+                                </div>
+                                <div class="tree-item">
+                                    <span class="tree-label">Parent Referrer</span>
+                                    <span class="tree-value" id="parentReferrer">-</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column -->
+                    <div class="dashboard-column">
+                        <!-- Badge Collection -->
+                        <div class="card">
+                            <h3>Badge Collection</h3>
+                            <p class="card-description">Unlock higher tier badges by referring more users</p>
+                            <div id="badgeGallery" class="nft-badge-gallery"></div>
+                            <div id="tierRequirements" class="nft-tier-requirements"></div>
+                        </div>
+
+                        <!-- Reward Rates -->
+                        <div class="card">
+                            <h3>Reward Structure</h3>
+                            <p class="card-description">Earn rewards from your referral network</p>
+                            <div class="reward-rates">
+                                <div class="rate-item">
+                                    <span class="rate-label">Direct Referrals (Level 1)</span>
+                                    <span class="rate-value" id="level1Rate">-</span>
+                                </div>
+                                <div class="rate-item">
+                                    <span class="rate-label">Indirect Referrals (Level 2)</span>
+                                    <span class="rate-value" id="level2Rate">-</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Register Tab -->
+            <section id="register" class="tab-content">
+                <br></br>
+                <div class="card">
+                    <h3>New User Registration</h3>
+                    <p>Join the CeloRefer network and start earning rewards!</p>
+                    
+                    <div class="form-group">
+                        <label for="referralCodeInput">Referral Code</label>
+                        <input type="text" id="referralCodeInput" placeholder="Enter referral code from your referrer">
+                        <button id="registerBtn" class="btn btn-primary">Register</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Genesis Registration</h3>
+                    <p>First user? Create your own referral code!</p>
+                    
+                    <div class="form-group">
+                        <label for="genesisCodeInput">Your Referral Code</label>
+                        <input type="text" id="genesisCodeInput" placeholder="Choose your unique referral code">
+                        <button id="registerGenesisBtn" class="btn btn-primary">Register as Genesis</button>
+                    </div>
+                </div>
+
+                <!-- Badge Tiers Information -->
+                <div class="card">
+                    <h3>Badge Tiers</h3>
+                    <div class="badge-tiers">
+                        <div class="badge-tier bronze">
+                            <h4>🥉 Bronze</h4>
+                            <p>0+ referrals</p>
+                            <p>Level 1: 5% | Level 2: 2%</p>
+                        </div>
+                        <div class="badge-tier silver">
+                            <h4>🥈 Silver</h4>
+                            <p>5+ referrals</p>
+                            <p>Level 1: 10% | Level 2: 4%</p>
+                        </div>
+                        <div class="badge-tier gold">
+                            <h4>🥇 Gold</h4>
+                            <p>15+ referrals</p>
+                            <p>Level 1: 15% | Level 2: 6%</p>
+                        </div>
+                        <div class="badge-tier platinum">
+                            <h4>💎 Platinum</h4>
+                            <p>50+ referrals</p>
+                            <p>Level 1: 20% | Level 2: 8%</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Quests Tab -->
+            <section id="quests" class="tab-content">
+                <br></br>
+                <div class="card">
+                    <h3>Active Quests</h3>
+                    <div id="questsList" class="quests-list">
+                        <p class="loading">Loading quests...</p>
+                    </div>
+                </div>
+
+                <!-- Admin Quest Creation -->
+                <div class="card admin-only hidden">
+                    <h3>Create Quest (Admin Only)</h3>
+                    <div class="form-group">
+                        <label for="questName">Quest Name</label>
+                        <input type="text" id="questName" placeholder="Quest name">
+                        
+                        <label for="questDescription">Description</label>
+                        <textarea id="questDescription" placeholder="Quest description"></textarea>
+                        
+                        <label for="questTargetReferrals">Target Referrals</label>
+                        <input type="number" id="questTargetReferrals" placeholder="Number of referrals required">
+                        
+                        <label for="questRewardAmount">Reward Amount (cUSD)</label>
+                        <input type="number" id="questRewardAmount" step="0.01" placeholder="Reward in cUSD">
+                        
+                        <button id="createQuestBtn" class="btn btn-primary">Create Quest</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Seasons Tab -->
+            <section id="seasons" class="tab-content">
+                <br></br>
+                <div class="card">
+                    <h3>Current Season</h3>
+                    <div id="currentSeason" class="season-info">
+                        <p class="loading">Loading season info...</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Your Season Stats</h3>
+                    <div id="seasonStats" class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-label">Season Referrals</div>
+                            <div class="stat-value" id="seasonReferrals">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Season Earnings</div>
+                            <div class="stat-value" id="seasonEarnings">0 cUSD</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Admin Season Management -->
+                <div class="card admin-only hidden">
+                    <h3>Season Management (Admin Only)</h3>
+                    <div class="form-group">
+                        <label for="seasonDuration">Duration (seconds)</label>
+                        <input type="number" id="seasonDuration" placeholder="Season duration in seconds">
+                        
+                        <label for="seasonPrizePool">Prize Pool (cUSD)</label>
+                        <input type="number" id="seasonPrizePool" step="0.01" placeholder="Total prize pool">
+                        
+                        <label for="seasonWinnersCount">Number of Winners</label>
+                        <input type="number" id="seasonWinnersCount" placeholder="Number of winners">
+                        
+                        <button id="startSeasonBtn" class="btn btn-primary">Start Season</button>
+                        <button id="endSeasonBtn" class="btn btn-danger">End Season</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Leaderboard Tab -->
+            <section id="leaderboard" class="tab-content">
+                <br></br>                
+                <div class="card">
+                    <h3>Top 50 Referrers</h3>
+                    <div id="leaderboardList" class="quests-list">
+                        <p class="loading">Loading leaderboard...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Staking Tab -->
+            <section id="staking" class="tab-content">
+                
+                <div class="card">
+                    <h3>Your Stake</h3>
+                    <div id="stakeInfo" class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-label">Staked Amount</div>
+                            <div class="stat-value" id="stakedAmount">0 cUSD</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Stake Time</div>
+                            <div class="stat-value" id="stakeTime">-</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Stake Tokens</h3>
+                    <div class="form-group">
+                        <label for="stakeAmount">Amount (cUSD)</label>
+                        <input type="number" id="stakeAmount" step="0.01" placeholder="Amount to stake">
+                        
+                        <label for="stakeReferralCode">Referral Code (optional)</label>
+                        <input type="text" id="stakeReferralCode" placeholder="Leave empty if already registered">
+                        
+                        <div class="button-group">
+                            <button id="approveStakeBtn" class="btn btn-secondary">Approve cUSD</button>
+                            <button id="stakeBtn" class="btn btn-primary">Stake</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Unstake Tokens</h3>
+                    <div class="form-group">
+                        <label for="unstakeAmount">Amount (cUSD)</label>
+                        <input type="number" id="unstakeAmount" step="0.01" placeholder="Amount to unstake">
+                        <button id="unstakeBtn" class="btn btn-danger">Unstake</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Contract Stats</h3>
+                    <div id="contractStats" class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-label">Total Staked</div>
+                            <div class="stat-value" id="totalStaked">0 cUSD</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Minimum Stake</div>
+                            <div class="stat-value" id="minimumStake">0 cUSD</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Admin Tab -->
+            <section id="admin" class="tab-content">
+                
+                <div class="card admin-only">
+                    <h3>Partner Management</h3>
+                    <div class="form-group">
+                        <label for="partnerAddress">Partner Address</label>
+                        <input type="text" id="partnerAddress" placeholder="0x...">
+                        
+                        <div class="button-group">
+                            <button id="authorizePartnerBtn" class="btn btn-primary">Authorize</button>
+                            <button id="revokePartnerBtn" class="btn btn-danger">Revoke</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card admin-only">
+                    <h3>Platform Fee Management</h3>
+                    <div class="form-group">
+                        <label for="platformFee">Platform Fee (basis points, max 2000)</label>
+                        <input type="number" id="platformFee" placeholder="e.g., 1500 = 15%">
+                        <button id="setPlatformFeeBtn" class="btn btn-primary">Set Platform Fee</button>
+                    </div>
+                    <div class="info-box">
+                        <p>Current Platform Fee: <span id="currentPlatformFee">-</span></p>
+                    </div>
+                </div>
+
+                <div class="card admin-only">
+                    <h3>Contract Information</h3>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <span class="info-label">Owner:</span>
+                            <span class="info-value" id="contractOwner">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Treasury:</span>
+                            <span class="info-value" id="treasuryAddress">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">CeloRefer Contract:</span>
+                            <span class="info-value">0x180a9b92653819d8b0e724af3320ffbe4b4170e8</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">DemoDApp Contract:</span>
+                            <span class="info-value">0xece0f83ff830fd139665349ba391e2ade19dced6</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>CeloRefer</h3>
+                <p>Decentralized referral protocol built on Celo blockchain.</p>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <a href="landing.html">Home</a>
+                <a href="README.md">Documentation</a>
+                <a href="QUICKSTART.md">Quick Start</a>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Network</h4>
+                <a href="https://alfajores.celoscan.io/" target="_blank">Alfajores Explorer</a>
+                <a href="https://faucet.celo.org/" target="_blank">Faucet</a>
+                <a href="https://celo.org/" target="_blank">Celo Network</a>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 CeloRefer. Built on Celo Blockchain.</p>
+            <div class="footer-links">
+                <a href="#">Privacy</a>
+                <a href="#">Terms</a>
+            </div>
+        </div>
+    </footer>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay hidden">
+        <div class="spinner"></div>
+        <p>Processing transaction...</p>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../sdk/celoRefer-sdk.js?v=20"></script>
+    <script src="../js/app.js?v=20"></script>
+</body>
+</html>
+

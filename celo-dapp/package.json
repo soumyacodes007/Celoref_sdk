@@ -1,0 +1,32 @@
+{
+  "name": "celorefer-demo-dapp",
+  "version": "1.0.0",
+  "description": "Decentralized Celo Native Growth Engine - Demo DApp",
+  "main": "frontend/index.html",
+  "homepage": "https://celorefer.io",
+  "scripts": {
+    "start": "cd frontend && http-server -p 8080",
+    "dev": "cd frontend && http-server -p 8080 -o"
+  },
+  "keywords": [
+    "celo",
+    "blockchain",
+    "referral",
+    "web3",
+    "dapp",
+    "nft"
+  ],
+  "author": "CeloRefer",
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/celorefer-demo"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
+

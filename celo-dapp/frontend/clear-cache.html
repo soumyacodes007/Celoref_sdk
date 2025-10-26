@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clear Cache & Reload</title>
+    <style>
+        body {
+            background: #0F0F0F;
+            color: #FCFF52;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 { font-size: 2rem; margin-bottom: 20px; }
+        .instruction {
+            background: #1A1A1A;
+            padding: 30px;
+            border-radius: 16px;
+            max-width: 600px;
+            margin: 20px;
+            border: 2px solid #FCFF52;
+        }
+        .step {
+            margin: 15px 0;
+            font-size: 1.2rem;
+            text-align: left;
+        }
+        .btn {
+            background: linear-gradient(135deg, #FCFF52, #35D07F);
+            color: #0F0F0F;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 10px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(252, 255, 82, 0.3);
+        }
+        .key {
+            background: #35D07F;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            margin: 0 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔄 Clear Browser Cache</h1>
+    
+    <div class="instruction">
+        <h2>Clear Cache & See NFT Badges!</h2>
+        
+        <div class="step">
+            <strong>Option 1:</strong> Click the button below:
+        </div>
+        
+        <button class="btn" onclick="clearAndReload()">🔄 Clear Cache & Go to App</button>
+        
+        <div class="step" style="margin-top: 20px;">
+            <strong>Option 2:</strong> Manual hard refresh:
+            <br>On Windows, press:
+            <br><span class="key">Ctrl</span> + <span class="key">Shift</span> + <span class="key">R</span>
+            <br>On Mac, press:
+            <br><span class="key">Cmd</span> + <span class="key">Shift</span> + <span class="key">R</span>
+        </div>
+        
+        <div class="step" style="margin-top: 20px;">
+            <strong>Option 3:</strong> Test NFT design separately:
+        </div>
+        
+        <a href="/test-nft.html" class="btn">View NFT Test Page</a>
+    </div>
+    
+    <div class="instruction">
+        <h3>Why This is Needed:</h3>
+        <p style="text-align: left;">
+            Your browser has cached the old version of app.js. 
+            A hard refresh forces the browser to download the latest version with all the bug fixes.
+        </p>
+    </div>
+
+    <script>
+        function clearAndReload() {
+            // Clear service worker cache if exists
+            if ('caches' in window) {
+                caches.keys().then(function(names) {
+                    for (let name of names) {
+                        caches.delete(name);
+                    }
+                });
+            }
+            
+            // Add cache buster and redirect
+            window.location.href = '/app/?v=12&t=' + Date.now();
+        }
+    </script>
+</body>
+</html>
+
