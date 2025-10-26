@@ -1,0 +1,201 @@
+---
+title: "System Architecture"
+description: "Understand the architecture of CeloRefer system"
+---
+
+# System Architecture
+
+## Smart Contract Architecture
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                     CeloReferEnhanced                       │
+│  ┌───────────────────────────────────────────────────────┐  │
+│  │  • User Registration & Referral Tree                  │  │
+│  │  • Dynamic Reward Distribution (tiered)               │  │
+│  │  • Quest System                                       │  │
+│  │  • Seasonal Competitions                              │  │
+│  │  │  • Badge Tier Management                            │  │
+│  │  • Platform Fee Collection                            │  │
+│  │  • Partner Authorization                              │  │
+│  └───────────────────────────────────────────────────────┘  │
+└─────────────────────────────────────────────────────────────┘
+                            │
+            ┌───────────────┴───────────────┐
+            │                               │
+┌───────────▼─────────────┐     ┌──────────▼───────────┐
+│   ReputationNFT.sol     │     │   Partner dApps      │
+│  • Soulbound NFT        │     │  (e.g., DemoDApp)    │
+│  • User Reputation      │     │  • Stake/Action      │
+│  • Dynamic Metadata     │     │  • Call recordAction │
+│  • Non-transferable     │     │  • Reward Users      │
+└─────────────────────────┘     └──────────────────────┘
+```
+
+## Component Overview
+
+### Core Contracts
+
+#### CeloReferEnhanced.sol
+This is the main contract that orchestrates the entire referral system:
+
+**Key Responsibilities:**
+- User registration and referral tree management
+- Dynamic reward calculation and distribution
+- Quest and season management
+- Partner authorization and fee collection
+- Badge tier progression
+
+**Storage Structure:**
+- User mappings (referral codes, referrer relationships, stats)
+- Quest and season data
+- Partner authorization records
+- Platform configuration (fees, tiers)
+
+#### ReputationNFT.sol
+This contract manages soulbound reputation NFTs:
+
+**Key Responsibilities:**
+- Minting unique, non-transferable NFTs for users
+- Generating dynamic metadata based on user stats
+- Ensuring NFTs cannot be traded or transferred
+
+**Storage Structure:**
+- Token ownership mappings
+- Metadata templates
+- User stat snapshots
+
+### SDK Layer
+
+The TypeScript SDK provides a clean interface for interacting with the contracts:
+
+**Key Modules:**
+- User management (registration, info retrieval)
+- Referral operations (action recording, reward claiming)
+- Badge and reputation systems
+- Quest and season participation
+- NFT operations
+- Partner integration tools
+
+## Data Flow
+
+### User Registration
+1. User calls `registerUser()` with optional referral code
+2. Contract validates referral code (if provided)
+3. New user entry created with unique referral code
+4. Referral relationships established in tree
+5. Event emitted for off-chain tracking
+
+### Action Recording
+1. Authorized partner calls `recordAction()` for user
+2. Contract validates partner authorization
+3. Action value processed through fee system
+4. Rewards calculated based on badge tier
+5. Rewards distributed to referrers
+6. User stats updated for badge progression
+7. Events emitted for analytics
+
+### Reward Claiming
+1. User calls `claimRewards()`
+2. Contract calculates available rewards
+3. Rewards transferred to user wallet
+4. Claimed amounts updated in storage
+5. Event emitted for tracking
+
+### Quest Participation
+1. User performs actions that count toward quests
+2. Progress tracked automatically by contract
+3. User calls `claimQuestReward()` when completed
+4. Reward transferred to user
+5. Completion recorded
+
+### Season Competition
+1. Platform owner creates season with parameters
+2. User actions during season count toward leaderboard
+3. Leaderboard updated in real-time
+4. Season ends automatically
+5. Rewards distributed to top performers
+
+## Security Model
+
+### Access Control
+- **Owner**: Platform administrator with special privileges
+- **Partners**: Authorized dApps that can record actions
+- **Users**: Anyone can register and participate
+
+### Key Security Features
+- ReentrancyGuard on all state-changing functions
+- Input validation and require statements
+- Time-based restrictions (season start/end)
+- Rate limiting where appropriate
+- Emergency pause mechanisms
+
+### Upgradeability
+- Contracts designed for upgradeability patterns
+- Storage layout considerations for future versions
+- Proxy pattern support
+
+## Technology Stack
+
+### Blockchain Layer
+- **Platform**: Celo (EVM-compatible)
+- **Consensus**: Proof of Stake
+- **Token Standards**: ERC-20 (cUSD), ERC-721 (NFT)
+
+### Smart Contract Layer
+- **Language**: Solidity ^0.8.20
+- **Framework**: OpenZeppelin contracts
+- **Development Tools**: Hardhat, Foundry
+- **Testing**: Mocha, Chai
+
+### SDK Layer
+- **Language**: TypeScript
+- **Framework**: viem for blockchain interactions
+- **Build Tools**: Vite, Rollup
+- **Testing**: Jest, TypeScript
+
+### Infrastructure
+- **Node Providers**: Celo nodes (Alchemy, Infura)
+- **Indexing**: The Graph (planned)
+- **Monitoring**: Tenderly, Datadog
+
+## Scalability Considerations
+
+### Gas Optimization
+- Efficient data structures to minimize storage costs
+- Batch operations where possible
+- Event-driven architecture for off-chain processing
+
+### Performance
+- Optimized read functions for frontend display
+- Caching strategies for frequently accessed data
+- Pagination for large datasets
+
+### Future Improvements
+- Layer 2 integration for reduced costs
+- Subgraph implementation for efficient querying
+- Cross-chain support for broader reach
+
+## Integration Patterns
+
+### For dApp Developers
+1. Install SDK and dependencies
+2. Initialize SDK with wallet client
+3. Register users automatically on first action
+4. Call `recordAction()` for valuable user actions
+5. Display user stats, rewards, and progress
+
+### For Platform Operators
+1. Deploy contracts with appropriate parameters
+2. Set platform fee percentages
+3. Authorize partner contracts
+4. Create quests and seasons
+5. Monitor system performance and analytics
+
+### For Users
+1. Register with referral code or as genesis user
+2. Share referral link with friends
+3. Perform actions in partner dApps
+4. Claim rewards periodically
+5. Participate in quests and seasons
+6. Mint reputation NFTs

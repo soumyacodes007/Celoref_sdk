@@ -1,0 +1,111 @@
+---
+title: "Quickstart"
+description: "Get started with the CeloRefer SDK in minutes"
+---
+
+## Get started in three steps
+
+Get your CeloRefer integration up and running in minutes.
+
+### Step 1: Set up your local environment
+
+<AccordionGroup>
+  <Accordion icon="copy" title="Install the CeloRefer SDK">
+    Install the CeloRefer SDK and its dependencies in your project:
+    
+    ```bash
+    npm install celorefer-sdk viem
+    ```
+    
+    Or with other package managers:
+    
+    ```bash
+    yarn add celorefer-sdk viem
+    pnpm add celorefer-sdk viem
+    bun add celorefer-sdk viem
+    ```
+  </Accordion>
+  <Accordion icon="rectangle-terminal" title="Initialize the SDK">
+    Import and initialize the SDK in your project:
+    
+    ```typescript
+    import { CeloReferSDK } from 'celorefer-sdk';
+    import { createWalletClient, http } from 'viem';
+    import { celoAlfajores } from 'viem/chains';
+
+    const walletClient = createWalletClient({
+      chain: celoAlfajores,
+      transport: http()
+    });
+
+    const sdk = CeloReferSDK.create(celoAlfajores, walletClient);
+    ```
+  </Accordion>
+</AccordionGroup>
+
+### Step 2: Register a user
+
+<AccordionGroup>
+  <Accordion icon="user-plus" title="Register with a referral code">
+    Register a new user with a referral code:
+    
+    ```typescript
+    const txHash = await sdk.registerUser('REF123ABC');
+    console.log('Registration transaction hash:', txHash);
+    ```
+  </Accordion>
+  <Accordion icon="user-plus" title="Register as genesis user">
+    Register as a genesis user with a custom code:
+    
+    ```typescript
+    const txHash = await sdk.registerGenesisUser('MYCODE');
+    console.log('Genesis registration transaction hash:', txHash);
+    ```
+  </Accordion>
+</AccordionGroup>
+
+### Step 3: Record user actions
+
+<Accordion icon="coins" title="Record actions for authorized partners">
+  If you're an authorized partner, record user actions to trigger referral rewards:
+  
+  ```typescript
+  const isPartner = await sdk.isAuthorizedPartner(partnerAddress);
+  
+  if (isPartner) {
+    const actionValue = 1000000000000000000n; // 1 cUSD
+    const txHash = await sdk.recordAction(userAddress, actionValue);
+    console.log('Action recorded:', txHash);
+  }
+  ```
+
+  <Tip>Only authorized partners can record actions. Contact the platform owner to become an authorized partner.</Tip>
+</Accordion>
+
+## Next steps
+
+Now that you have the CeloRefer SDK running, explore these key features:
+
+<CardGroup cols={2}>
+
+<Card title="User Management" icon="user" href="/api-reference/user-management">
+  Learn how to register users and retrieve user information.
+</Card>
+
+<Card title="Badge System" icon="award" href="/overview/components#badge--reputation-system">
+  Understand the tiered badge system and reward rates.
+</Card>
+
+<Card title="Quest System" icon="gamepad" href="/api-reference/quest-system">
+  Implement gamified challenges with rewards.
+</Card>
+
+<Card title="Seasonal Competitions" icon="trophy" href="/api-reference/seasonal-competitions">
+  Create time-based leaderboards with prize pools.
+</Card>
+
+</CardGroup>
+
+<Note>
+  **Need help?** Check out our [API Reference](/api-reference/introduction) or join our [community](https://discord.gg/celorefer).
+</Note>

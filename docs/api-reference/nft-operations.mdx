@@ -1,0 +1,188 @@
+---
+title: "NFT Operations"
+description: "API reference for reputation NFT minting and management"
+---
+
+# NFT Operations
+
+Methods for working with reputation NFTs.
+
+## mintReputationNFT
+
+Mints a reputation NFT for a user.
+
+```typescript
+async mintReputationNFT(userAddress: Address): Promise<Hex>
+```
+
+### Parameters
+
+| Name | Type | Description |
+|------|------|-------------|
+| userAddress | `Address` | Address of the user |
+
+### Returns
+
+`Hex` - Transaction hash of the minting.
+
+### Example
+
+```typescript
+const txHash = await sdk.mintReputationNFT('0x1234...');
+console.log('NFT minted:', txHash);
+```
+
+### Requirements
+
+- User must be registered
+- User must not already have an NFT
+
+## hasReputationNFT
+
+Checks if a user has minted their reputation NFT.
+
+```typescript
+async hasReputationNFT(userAddress: Address): Promise<boolean>
+```
+
+### Parameters
+
+| Name | Type | Description |
+|------|------|-------------|
+| userAddress | `Address` | Address of the user |
+
+### Returns
+
+`boolean` - True if the user has an NFT, false otherwise.
+
+### Example
+
+```typescript
+const hasNFT = await sdk.hasReputationNFT('0x1234...');
+console.log('Has NFT:', hasNFT);
+```
+
+## getTokenIdByUser
+
+Gets the token ID for a user's reputation NFT.
+
+```typescript
+async getTokenIdByUser(userAddress: Address): Promise<bigint>
+```
+
+### Parameters
+
+| Name | Type | Description |
+|------|------|-------------|
+| userAddress | `Address` | Address of the user |
+
+### Returns
+
+`bigint` - Token ID of the user's NFT.
+
+### Example
+
+```typescript
+const tokenId = await sdk.getTokenIdByUser('0x1234...');
+console.log('Token ID:', tokenId);
+```
+
+## getNFTTokenURI
+
+Gets the token URI for an NFT.
+
+```typescript
+async getNFTTokenURI(tokenId: bigint): Promise<string>
+```
+
+### Parameters
+
+| Name | Type | Description |
+|------|------|-------------|
+| tokenId | `bigint` | Token ID |
+
+### Returns
+
+`string` - Token URI.
+
+### Example
+
+```typescript
+const tokenId = await sdk.getTokenIdByUser('0x1234...');
+const tokenURI = await sdk.getNFTTokenURI(tokenId);
+console.log('Token URI:', tokenURI);
+```
+
+## getReputationNFTData
+
+Gets the metadata for a user's reputation NFT.
+
+```typescript
+async getReputationNFTData(userAddress: Address): Promise<ReputationNFTData>
+```
+
+### Parameters
+
+| Name | Type | Description |
+|------|------|-------------|
+| userAddress | `Address` | Address of the user |
+
+### Returns
+
+[ReputationNFTData](/api-reference/typescript-types#reputationnftdata) object containing NFT details.
+
+### Example
+
+```typescript
+const nftData = await sdk.getReputationNFTData('0x1234...');
+console.log('NFT Tier:', nftData.tier);
+console.log('NFT Referrals:', nftData.referrals);
+console.log('NFT Earnings:', nftData.earnings);
+```
+
+## getNFTTotalSupply
+
+Gets the total supply of reputation NFTs.
+
+```typescript
+async getNFTTotalSupply(): Promise<bigint>
+```
+
+### Returns
+
+`bigint` - Total supply of NFTs.
+
+### Example
+
+```typescript
+const supply = await sdk.getNFTTotalSupply();
+console.log('Total NFTs minted:', supply);
+```
+
+## generateBadgeSVG
+
+Generates an SVG badge for display.
+
+```typescript
+generateBadgeSVG(tier: number, referrals: number, earnings: bigint, rank: number): string
+```
+
+### Parameters
+
+| Name | Type | Description |
+|------|------|-------------|
+| tier | `number` | Badge tier |
+| referrals | `number` | Number of referrals |
+| earnings | `bigint` | Total earnings in wei |
+| rank | `number` | User's rank |
+
+### Returns
+
+`string` - Data URI of the SVG badge.
+
+### Example
+
+```typescript
+const svg = sdk.generateBadgeSVG(2, 25, 1000000000000000000n, 5);
+// Use this SVG in your UI
+```

@@ -1,0 +1,175 @@
+---
+title: "Token Economics"
+description: "Understand the token economics and reward distribution model of CeloRefer"
+---
+
+# Token Economics
+
+## Reward Distribution
+
+For every action worth **1 cUSD**:
+1. **Platform Fee**: 0.15 cUSD (15%) → Treasury
+2. **Remaining**: 0.85 cUSD → Referrer Rewards
+
+### Example (Bronze Tier User):
+- Direct Referrer (Level 1): 0.85 × 5% = 0.0425 cUSD
+- Parent Referrer (Level 2): 0.85 × 2% = 0.017 cUSD
+- Platform keeps: 0.15 cUSD
+- User/Partner keeps: ~0.7905 cUSD
+
+### Example (Platinum Tier User):
+- Direct Referrer (Level 1): 0.85 × 8% = 0.068 cUSD
+- Parent Referrer (Level 2): 0.85 × 3.5% = 0.02975 cUSD
+- Platform keeps: 0.15 cUSD
+- User/Partner keeps: ~0.75225 cUSD
+
+## Dynamic Reward Rates
+
+Reward rates are based on user badge tiers:
+
+| Badge Tier | Referrals | Level 1 Reward | Level 2 Reward |
+|------------|-----------|----------------|----------------|
+| 🥉 Bronze | 0+ | 5% | 2% |
+| 🥈 Silver | 5+ | 6% | 2.5% |
+| 🥇 Gold | 15+ | 7% | 3% |
+| 💎 Platinum | 50+ | 8% | 3.5% |
+
+## Badge System
+
+Users earn badges based on their referral performance:
+- Badges unlock higher reward rates
+- Badge tier displayed in reputation NFTs
+- Visual representation of user achievement
+- Gamification encourages viral growth
+
+### Badge Requirements
+
+| Badge | Minimum Referrals | Maximum Referrals |
+|-------|-------------------|-------------------|
+| Bronze | 0 | 4 |
+| Silver | 5 | 14 |
+| Gold | 15 | 49 |
+| Platinum | 50 | ∞ |
+
+## Quest Rewards
+
+Quests provide additional incentive for user engagement:
+- Set target referral counts
+- Offer cUSD rewards for completion
+- Track user progress automatically
+- Claim rewards on completion
+- Drive specific user behaviors
+
+### Example Quest Structure
+```typescript
+{
+  name: "First 5 Referrals",
+  targetReferrals: 5,
+  rewardAmount: BigInt(50 * 10**18), // 50 cUSD
+  startTime: Math.floor(Date.now() / 1000),
+  endTime: Math.floor(Date.now() / 1000) + 30 * 24 * 60 * 60 // 30 days
+}
+```
+
+## Seasonal Competitions
+
+Seasonal competitions create time-bound engagement spikes:
+- Define season duration and prize pool
+- Track user performance during season
+- Distribute rewards to top performers
+- Create urgency and engagement spikes
+- Build community around leaderboards
+
+### Example Season Structure
+```typescript
+{
+  name: "Summer Challenge",
+  description: "Summer referral competition",
+  startTime: Math.floor(Date.now() / 1000),
+  endTime: Math.floor(Date.now() / 1000) + 60 * 24 * 60 * 60, // 60 days
+  totalPrizePool: BigInt(1000 * 10**18), // 1000 cUSD
+  winnersCount: 10
+}
+```
+
+## Sustainability Model
+
+### Revenue Streams
+- **Platform fees**: 15% of all action values
+- **Quest rewards**: Funded by platform or partners
+- **Season prize pools**: Funded by platform or partners
+- **Partner subscriptions**: Tiered subscription model
+
+### Cost Structure
+- **Smart contract gas fees**: Ethereum transaction costs
+- **Development and maintenance**: Ongoing platform costs
+- **Marketing and growth**: User acquisition expenses
+- **Community rewards**: Incentive programs
+
+### Economic Balance
+- Platform fees fund ecosystem development
+- Quest rewards drive user engagement
+- Season prize pools create competition
+- Partner subscriptions for white-label features
+
+## Token Standards
+
+### cUSD (Celo Dollar)
+- **Standard**: ERC-20 compatible
+- **Decimals**: 18
+- **Usage**: Primary reward token and platform currency
+
+### Reputation NFTs
+- **Standard**: ERC-721 compatible
+- **Properties**: Soulbound (non-transferable)
+- **Usage**: User reputation and achievement tracking
+
+## Fee Structure
+
+### Platform Fees
+- **Default rate**: 15% of action value
+- **Destination**: Platform treasury
+
+### Partner Fees
+- **Subscription tiers**: Free, Basic, Pro, Enterprise
+- **Features**: Vary by tier
+- **Revenue sharing**: With platform
+
+### User Fees
+- **Registration**: Free
+- **Reward claiming**: Standard gas fees
+- **NFT minting**: Standard gas fees
+
+## Incentive Alignment
+
+### For Users
+- Direct financial rewards for referrals
+- Status and recognition through badges/NFTs
+- Competition through quests and seasons
+
+### For Partners
+- Ready-to-use referral infrastructure
+- Revenue sharing through platform fees
+- Brand-specific customization options
+
+### For Platform
+- Sustainable revenue through fees
+- Network effects through viral growth
+- Data insights through analytics
+
+## Economic Security
+
+### Anti-Spam Measures
+- Minimum action value requirements
+- Rate limiting on registrations
+- Verification mechanisms for quality referrals
+
+### Fraud Prevention
+- Multi-level referral validation
+- Badge tier progression requirements
+- Automated anomaly detection
+
+### Risk Mitigation
+- Diversified revenue streams
+- Adjustable fee structures
+- Emergency pause mechanisms

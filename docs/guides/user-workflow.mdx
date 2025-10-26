@@ -1,0 +1,145 @@
+---
+title: "User Workflow"
+description: "Learn how users interact with the CeloRefer system"
+---
+
+# User Workflow
+
+Understanding the user journey in the CeloRefer system.
+
+## 1. Registration
+
+Users can join the CeloRefer system in two ways:
+
+### With a Referral Code
+```typescript
+// Register with a referral code
+const txHash = await sdk.registerUser('REF123ABC');
+console.log('Registration transaction:', txHash);
+```
+
+### As a Genesis User
+```typescript
+// Register as genesis user with custom code
+const txHash = await sdk.registerGenesisUser('MYCODE');
+console.log('Genesis registration transaction:', txHash);
+```
+
+## 2. Get Referral Code
+
+After registration, users receive a unique referral code:
+
+```typescript
+const userInfo = await sdk.getUserInfo(userAddress);
+console.log('Your referral code:', userInfo.referralCode);
+
+// Generate referral link for sharing
+const referralLink = sdk.generateReferralLink(userInfo.referralCode);
+console.log('Share this link:', referralLink);
+```
+
+## 3. Share Referral Link
+
+Users can share their referral link with others:
+```
+https://your-dapp.com/referral?code=USER_REFERRAL_CODE
+```
+
+## 4. Earn Rewards
+
+Users earn rewards when their referrals perform actions:
+
+```typescript
+const userStats = await sdk.getUserStats(userAddress);
+console.log('Total earnings:', userStats.totalEarnings);
+
+// Check current badge tier and benefits
+const badgeTier = await sdk.getBadgeTier(userAddress);
+const badgeInfo = sdk.getBadgeInfo(badgeTier);
+console.log('Current tier:', badgeInfo.name);
+console.log('Level 1 reward rate:', badgeInfo.level1Rate, '%');
+console.log('Level 2 reward rate:', badgeInfo.level2Rate, '%');
+```
+
+## 5. Level Up
+
+Users level up based on their referral count:
+
+```typescript
+const userStats = await sdk.getUserStats(userAddress);
+console.log('Current tier progress:', userStats.nextTierProgress, '% to next tier');
+
+const badgeInfo = sdk.getBadgeInfo(userStats.currentTier);
+console.log('Current badge:', badgeInfo.name);
+```
+
+## 6. Participate in Quests
+
+Users can participate in quests:
+
+```typescript
+// Get available quests
+const quests = await sdk.listActiveQuests();
+
+// Check progress on each quest
+for (const quest of quests) {
+  const progress = await sdk.getUserQuestProgress(userAddress, quest.id);
+  console.log(`Quest: ${quest.name}`);
+  console.log(`Progress: ${progress.progress}/${quest.targetReferrals}`);
+  
+  if (progress.completed && !progress.claimed) {
+    // Claim reward when quest is completed
+    const txHash = await sdk.claimQuestReward(quest.id);
+    console.log('Reward claimed:', txHash);
+  }
+}
+```
+
+## 7. Compete in Seasons
+
+Users can compete in seasonal competitions:
+
+```typescript
+// Get current season info
+const season = await sdk.getCurrentSeason();
+
+if (season.isActive) {
+  const seasonId = await sdk.getCurrentSeasonId();
+  const userStats = await sdk.getSeasonUserStats(seasonId, userAddress);
+  
+  console.log('Season:', season.name);
+  console.log('Your rank:', userStats.rank);
+  console.log('Your referrals this season:', userStats.referrals);
+}
+```
+
+## 8. Mint Reputation NFT
+
+Users can mint their reputation NFT:
+
+```typescript
+// Check if user has an NFT
+const hasNFT = await sdk.hasReputationNFT(userAddress);
+
+if (!hasNFT) {
+  // Mint NFT
+  const txHash = await sdk.mintReputationNFT(userAddress);
+  console.log('NFT minted:', txHash);
+} else {
+  // Get NFT data
+  const nftData = await sdk.getReputationNFTData(userAddress);
+  console.log('NFT Token ID:', nftData.tokenId);
+  
+  // Get token URI for metadata
+  const tokenURI = await sdk.getNFTTokenURI(nftData.tokenId);
+  console.log('NFT Metadata URI:', tokenURI);
+  
+  // Generate SVG badge for display
+  const badgeSVG = sdk.generateBadgeSVG(
+    nftData.tier,
+    nftData.referrals,
+    nftData.earnings,
+    userRank // Get from leaderboard
+  );
+}
+```

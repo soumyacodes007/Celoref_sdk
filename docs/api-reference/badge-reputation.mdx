@@ -1,0 +1,77 @@
+---
+title: "Badge & Reputation"
+description: "API reference for badge tiers and reputation system"
+---
+
+# Badge & Reputation
+
+Methods for working with badge tiers and the reputation system.
+
+## getBadgeTier
+
+Gets the badge tier for a user based on their referral count.
+
+```typescript
+async getBadgeTier(userAddress: Address): Promise<number>
+```
+
+### Parameters
+
+| Name | Type | Description |
+|------|------|-------------|
+| userAddress | `Address` | Address of the user |
+
+### Returns
+
+`number` - Badge tier (0-3 for Bronze, Silver, Gold, Platinum).
+
+### Example
+
+```typescript
+const tier = await sdk.getBadgeTier('0x1234...');
+console.log('Badge tier:', tier);
+```
+
+## getBadgeInfo
+
+Gets information about a specific badge tier.
+
+```typescript
+getBadgeInfo(tier: number): BadgeInfo
+```
+
+### Parameters
+
+| Name | Type | Description |
+|------|------|-------------|
+| tier | `number` | Badge tier (0-3) |
+
+### Returns
+
+[BadgeInfo](/api-reference/typescript-types#badgeinfo) object containing badge details.
+
+### Example
+
+```typescript
+const badgeInfo = sdk.getBadgeInfo(2); // Gold badge
+console.log('Badge name:', badgeInfo.name);
+console.log('Level 1 rate:', badgeInfo.level1Rate);
+```
+
+## Badge Tiers
+
+The CeloRefer system includes a tiered badge system based on referral count:
+
+| Tier | Name | Threshold | Level 1 Rate | Level 2 Rate |
+|------|------|-----------|--------------|---------------|
+| 0 | Bronze | 0+ | 5% | 2% |
+| 1 | Silver | 5+ | 6% | 2.5% |
+| 2 | Gold | 15+ | 7% | 3% |
+| 3 | Platinum | 50+ | 8% | 3.5% |
+
+### Benefits by Tier
+
+- **Bronze**: Starting tier for new users
+- **Silver**: Improved reward rates + quest access
+- **Gold**: Premium features + priority support
+- **Platinum**: Elite status + maximum benefits + exclusive perks

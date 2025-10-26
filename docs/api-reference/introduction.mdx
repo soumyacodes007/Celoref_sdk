@@ -1,0 +1,74 @@
+---
+title: "API Reference"
+description: "Complete API documentation for the CeloRefer SDK"
+---
+
+# CeloRefer SDK API Reference
+
+Welcome to the CeloRefer SDK API documentation. This reference provides detailed information about all available methods, parameters, and return values for integrating CeloRefer into your dApp.
+
+## Overview
+
+The CeloRefer SDK is a TypeScript library built on top of viem that provides easy access to all CeloRefer smart contract functionality. It offers type-safe interactions with the contracts and handles all the complexity of blockchain interactions behind a simple API.
+
+## Installation
+
+```bash
+npm install celorefer-sdk viem
+```
+
+## Initialization
+
+```typescript
+import { CeloReferSDK } from 'celorefer-sdk';
+import { createWalletClient, http } from 'viem';
+import { celoAlfajores } from 'viem/chains';
+
+const walletClient = createWalletClient({
+  chain: celoAlfajores,
+  transport: http('YOUR_RPC_URL')
+});
+
+const sdk = CeloReferSDK.create(celoAlfajores, walletClient);
+```
+
+## Error Handling
+
+All SDK methods can throw errors. Common error types include:
+
+- `InvalidAddressError`: When an invalid Ethereum address is provided
+- `UnauthorizedError`: When a method is called by an unauthorized account
+- `InsufficientFundsError`: When there aren't enough funds for a transaction
+- `ValidationError`: When input parameters don't meet requirements
+
+Always wrap SDK calls in try-catch blocks:
+
+```typescript
+try {
+  const txHash = await sdk.registerUser('REF123ABC');
+  console.log('Transaction hash:', txHash);
+} catch (error) {
+  console.error('Registration failed:', error.message);
+}
+```
+
+## Core Modules
+
+The SDK is organized into several core modules:
+
+- [User Management](/api-reference/user-management)
+- [Referral Operations](/api-reference/referral-operations)
+- [Badge & Reputation](/api-reference/badge-reputation)
+- [NFT Operations](/api-reference/nft-operations)
+
+## Advanced Features
+
+- [Quest System](/api-reference/quest-system)
+- [Seasonal Competitions](/api-reference/seasonal-competitions)
+- [Partner Integration](/api-reference/partner-integration)
+- [Leaderboard](/api-reference/leaderboard)
+
+## Utilities
+
+- [Utility Functions](/api-reference/utility-functions)
+- [TypeScript Types](/api-reference/typescript-types)

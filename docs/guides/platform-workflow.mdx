@@ -1,0 +1,123 @@
+---
+title: "Platform Owner Workflow"
+description: "Learn how platform owners manage the CeloRefer system"
+---
+
+# Platform Owner Workflow
+
+Understanding how platform owners manage the CeloRefer system.
+
+## 1. Deploy Contracts
+
+Platform owners deploy the CeloRefer contracts to the Celo network:
+
+**Network:** Celo Sepolia Testnet (Chain ID: 11142220)
+
+| Contract | Address |
+|----------|----------|
+| CeloReferEnhanced | `0xCCAddAC9Ac91D548ada36684dB2b3796A0c7Ea73` |
+| ReputationNFT | `0xe667437aF0424Ee9cb983b755Ccccf218779E37b` |
+| cUSD | `0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b` |
+
+## 2. Set Platform Fee
+
+Configure the platform fee percentage:
+
+```typescript
+// This is typically done by the platform owner
+// Platform fee is currently set to 15% (1500 basis points)
+const platformFee = await sdk.getPlatformFee();
+console.log('Current platform fee:', platformFee / 100, '%');
+```
+
+## 3. Authorize Partners
+
+Authorize partner dApps:
+
+```typescript
+// Check if a partner is authorized
+const isAuthorized = await sdk.isAuthorizedPartner(partnerAddress);
+console.log('Partner authorized:', isAuthorized);
+
+// Authorization is typically done by the platform owner
+// Partners can have different subscription tiers (0=Free, 1=Basic, 2=Pro, 3=Enterprise)
+```
+
+## 4. Create Quests
+
+Create quests for users:
+
+```typescript
+// Quest creation is typically done by the platform owner
+// Example quest structure:
+const questExample = {
+  name: "First 5 Referrals",
+  description: "Refer 5 users to earn a reward",
+  targetReferrals: 5,
+  rewardAmount: BigInt(50 * 10**18), // 50 cUSD
+  startTime: Math.floor(Date.now() / 1000),
+  endTime: Math.floor(Date.now() / 1000) + 30 * 24 * 60 * 60 // 30 days
+};
+
+// Quests are created directly on the contract by the owner
+```
+
+## 5. Manage Seasons
+
+Create and manage seasonal competitions:
+
+```typescript
+// Season creation is typically done by the platform owner
+// Example season structure:
+const seasonExample = {
+  name: "Summer Challenge",
+  description: "Summer referral competition",
+  startTime: Math.floor(Date.now() / 1000),
+  endTime: Math.floor(Date.now() / 1000) + 60 * 24 * 60 * 60, // 60 days
+  totalPrizePool: BigInt(1000 * 10**18), // 1000 cUSD
+  winnersCount: 10
+};
+
+// Seasons are created directly on the contract by the owner
+```
+
+## 6. Monitor System
+
+Monitor the system performance:
+
+```typescript
+// Get system statistics
+const stats = await sdk.getContractStats();
+console.log('Total users:', stats.totalUsers);
+console.log('Total referrals:', stats.totalReferrals);
+console.log('Total quests:', stats.totalQuests);
+console.log('Total seasons:', stats.totalSeasons);
+
+// Get partner information
+const subscription = await sdk.getPartnerSubscription(partnerAddress);
+console.log('Partner tier:', subscription.tier);
+console.log('Partner status:', subscription.isActive ? 'Active' : 'Inactive');
+```
+
+## 7. Collect Platform Fees
+
+Platform fees are automatically collected and sent to the treasury:
+
+```typescript
+// Get treasury address
+const treasury = await sdk.getTreasury();
+console.log('Treasury address:', treasury);
+
+// Platform fees are automatically distributed to the treasury
+// No manual withdrawal needed
+```
+
+## 8. Emergency Functions
+
+In case of emergencies, platform owners have special functions:
+
+```typescript
+// Emergency functions are available only to the contract owner
+// These include pause/unpause and emergency withdrawal functions
+// They are used only in critical situations
+```

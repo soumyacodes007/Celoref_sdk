@@ -1,0 +1,81 @@
+---
+title: "Leaderboard"
+description: "API reference for global and seasonal leaderboards"
+---
+
+# Leaderboard
+
+Methods for retrieving leaderboard information.
+
+## getTopUsers
+
+Gets the top users on the leaderboard.
+
+```typescript
+async getTopUsers(limit: number): Promise<LeaderboardUser[]>
+```
+
+### Parameters
+
+| Name | Type | Description |
+|------|------|-------------|
+| limit | `number` | Maximum number of users to return |
+
+### Returns
+
+Array of [LeaderboardUser](/api-reference/typescript-types#leaderboarduser) objects.
+
+### Example
+
+```typescript
+const topUsers = await sdk.getTopUsers(10);
+topUsers.forEach(user => {
+  console.log(`Rank ${user.rank}: ${user.address}`);
+  console.log(`Referrals: ${user.referralCount}, Earnings: ${user.totalEarnings}`);
+});
+```
+
+## getUserRank
+
+Gets a user's rank on the leaderboard.
+
+```typescript
+async getUserRank(userAddress: Address): Promise<number>
+```
+
+### Parameters
+
+| Name | Type | Description |
+|------|------|-------------|
+| userAddress | `Address` | Address of the user |
+
+### Returns
+
+`number` - User's rank (1-indexed).
+
+### Example
+
+```typescript
+const rank = await sdk.getUserRank('0x1234...');
+console.log('Your rank:', rank);
+```
+
+## getLeaderboardStats
+
+Gets statistics about the leaderboard system.
+
+```typescript
+async getLeaderboardStats(): Promise<LeaderboardStats>
+```
+
+### Returns
+
+[LeaderboardStats](/api-reference/typescript-types#leaderboardstats) object containing leaderboard statistics.
+
+### Example
+
+```typescript
+const stats = await sdk.getLeaderboardStats();
+console.log('Total users:', stats.totalUsers);
+console.log('Total referrals:', stats.totalReferrals);
+```

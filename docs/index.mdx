@@ -1,0 +1,180 @@
+---
+title: "CeloRefer SDK - Decentralized Referral System"
+description: "Build viral growth loops with incentivized referrals on Celo blockchain"
+---
+
+<Hero
+  title="CeloRefer SDK"
+  subtitle="A TypeScript SDK for interacting with the CeloRefer referral system on the Celo blockchain"
+  icon="users"
+  accentColor="#35D07F"
+>
+  <Button href="/guides/quickstart" variant="primary">
+    Get Started
+  </Button>
+  <Button href="/api-reference/introduction" variant="secondary">
+    API Reference
+  </Button>
+</Hero>
+
+<Features
+  title="Core Features"
+  features={[
+    {
+      title: "User Management",
+      description: "Registration with referral codes and genesis user setup",
+      icon: "user-plus"
+    },
+    {
+      title: "Badge System",
+      description: "Dynamic tier system (Bronze, Silver, Gold, Platinum) based on referrals",
+      icon: "award"
+    },
+    {
+      title: "Dynamic Rewards",
+      description: "Multi-level referral rewards with tier-based multipliers",
+      icon: "coins"
+    },
+    {
+      title: "Quest System",
+      description: "Gamified challenges with rewards for completing milestones",
+      icon: "gamepad"
+    },
+    {
+      title: "Seasonal Competitions",
+      description: "Time-based leaderboards with prize pools",
+      icon: "trophy"
+    },
+    {
+      title: "Reputation NFTs",
+      description: "On-chain achievement badges with dynamic metadata",
+      icon: "image"
+    }
+  ]}
+/>
+
+<Section title="Quick Start">
+
+```bash
+npm install celorefer-sdk viem
+```
+
+```typescript
+import { CeloReferSDK } from 'celorefer-sdk';
+import { createWalletClient, http } from 'viem';
+import { celoAlfajores } from 'viem/chains';
+
+const walletClient = createWalletClient({
+  chain: celoAlfajores,
+  transport: http()
+});
+
+const sdk = CeloReferSDK.create(celoAlfajores, walletClient);
+
+// Register with a referral code
+const txHash = await sdk.registerUser('REF123ABC');
+```
+
+</Section>
+
+<Section title="How It Works" subtitle="Simple integration for different stakeholders">
+
+<Tabs
+  tabs={[
+    {
+      label: "For Users",
+      content: (
+        <Steps
+          steps={[
+            "**Register**: Sign up with a referral code or as genesis user",
+            "**Get Your Code**: Receive a unique referral code",
+            "**Share**: Invite friends using your referral link",
+            "**Earn**: Receive rewards when referrals perform actions",
+            "**Level Up**: Earn badges as you refer more users",
+            "**Compete**: Participate in quests and seasonal competitions",
+            "**Collect**: Mint your reputation NFT"
+          ]}
+        />
+      )
+    },
+    {
+      label: "For Developers",
+      content: (
+        <Steps
+          steps={[
+            "**Install SDK**: Add celorefer-sdk and viem to your project",
+            "**Initialize**: Create SDK instance with wallet client",
+            "**Integrate**: Add referral registration to your user flow",
+            "**Record Actions**: Call `recordAction()` when users perform valuable actions",
+            "**Automatic Rewards**: System automatically distributes rewards to referrers",
+            "**Customize**: Create custom quests, seasons, and branding"
+          ]}
+        />
+      )
+    },
+    {
+      label: "For Platforms",
+      content: (
+        <Steps
+          steps={[
+            "**Deploy Contracts**: Deploy CeloRefer contracts to Celo network",
+            "**Set Fees**: Configure platform fee percentage",
+            "**Authorize Partners**: Authorize partner DApps",
+            "**Create Quests**: Design milestone challenges with rewards",
+            "**Run Seasons**: Launch time-bound competitions",
+            "**Monitor Growth**: Track ecosystem metrics"
+          ]}
+        />
+      )
+    }
+  ]}
+/>
+
+</Section>
+
+<Section title="Badge System">
+
+| Tier | Name | Threshold | Level 1 Rate | Level 2 Rate |
+|------|------|-----------|--------------|---------------|
+| 0 | Bronze | 0+ | 5% | 2% |
+| 1 | Silver | 5+ | 6% | 2.5% |
+| 2 | Gold | 15+ | 7% | 3% |
+| 3 | Platinum | 50+ | 8% | 3.5% |
+
+</Section>
+
+<Section title="Deployed Contracts">
+
+**Network:** Celo Sepolia Testnet (Chain ID: 11142220)
+
+| Contract | Address |
+|----------|----------|
+| CeloReferEnhanced | `0xCCAddAC9Ac91D548ada36684dB2b3796A0c7Ea73` |
+| ReputationNFT | `0xe667437aF0424Ee9cb983b755Ccccf218779E37b` |
+| cUSD | `0xdE9e4C3ce781b4bA68120d6261cbad65ce0aB00b` |
+
+</Section>
+
+<Section title="Ready to integrate?" subtitle="Get started with CeloRefer in minutes">
+
+<Columns cols={2}>
+  <Card
+    title="Developer Quickstart"
+    icon="rocket"
+    href="/guides/quickstart"
+    horizontal
+  >
+    Follow our quickstart guide to integrate CeloRefer into your dApp.
+  </Card>
+  
+  <Card
+    title="API Documentation"
+    icon="book"
+    href="/api-reference/introduction"
+    horizontal
+  >
+    Explore the complete API reference for all CeloRefer features.
+  </Card>
+</Columns>
+
+</Section>

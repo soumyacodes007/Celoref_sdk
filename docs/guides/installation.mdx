@@ -1,0 +1,73 @@
+---
+title: "Installation"
+description: "Learn how to install and set up the CeloRefer SDK"
+---
+
+# Installation
+
+## Requirements
+
+- Node.js version 16 or higher
+- A Celo-compatible wallet
+- Access to a Celo node (mainnet, alfajores testnet, or local node)
+
+## Installing the Package
+
+Install the CeloRefer SDK and its peer dependencies using npm:
+
+```bash
+npm install celorefer-sdk viem
+```
+
+Or with yarn:
+
+```bash
+yarn add celorefer-sdk viem
+```
+
+Or with pnpm:
+
+```bash
+pnpm add celorefer-sdk viem
+```
+
+Or with bun:
+
+```bash
+bun add celorefer-sdk viem
+```
+
+## Peer Dependencies
+
+The CeloRefer SDK has a peer dependency on viem, which is not installed automatically. You must install it yourself:
+
+```bash
+npm install viem
+```
+
+## Supported Environments
+
+The SDK works in both Node.js and browser environments:
+
+- Node.js >= 16
+- Modern browsers (Chrome, Firefox, Safari, Edge)
+- Bundlers like webpack, Rollup, or Vite
+
+## TypeScript Support
+
+The SDK is written in TypeScript and includes type definitions. No additional setup is required for TypeScript projects.
+
+## Basic Setup
+
+```typescript
+import { CeloReferSDK } from 'celorefer-sdk';
+import { createWalletClient, http } from 'viem';
+import { celoAlfajores } from 'viem/chains';
+
+const walletClient = createWalletClient({
+  chain: celoAlfajores,
+  transport: http('YOUR_RPC_URL')
+});
+
+const sdk = CeloReferSDK.create(celoAlfajores, walletClient);
+```

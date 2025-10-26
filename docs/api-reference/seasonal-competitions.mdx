@@ -1,0 +1,138 @@
+---
+title: "Seasonal Competitions"
+description: "API reference for seasonal competitions and leaderboards"
+---
+
+# Seasonal Competitions
+
+Methods for working with seasonal competitions.
+
+## getCurrentSeason
+
+Gets the current active season.
+
+```typescript
+async getCurrentSeason(): Promise<Season>
+```
+
+### Returns
+
+[Season](/api-reference/typescript-types#season) object containing season details.
+
+### Example
+
+```typescript
+const season = await sdk.getCurrentSeason();
+console.log('Prize pool:', season.totalPrizePool);
+console.log('Winners count:', season.winnersCount);
+```
+
+## getCurrentSeasonId
+
+Gets the ID of the current season.
+
+```typescript
+async getCurrentSeasonId(): Promise<number>
+```
+
+### Returns
+
+`number` - Current season ID.
+
+### Example
+
+```typescript
+const seasonId = await sdk.getCurrentSeasonId();
+console.log('Current season ID:', seasonId);
+```
+
+## getSeason
+
+Gets details for a specific season.
+
+```typescript
+async getSeason(seasonId: number): Promise<Season>
+```
+
+### Parameters
+
+| Name | Type | Description |
+|------|------|-------------|
+| seasonId | `number` | ID of the season |
+
+### Returns
+
+[Season](/api-reference/typescript-types#season) object containing season details.
+
+### Example
+
+```typescript
+const season = await sdk.getSeason(1);
+console.log('Season name:', season.name);
+```
+
+## getSeasonUserStats
+
+Gets a user's stats for a specific season.
+
+```typescript
+async getSeasonUserStats(seasonId: number, userAddress: Address): Promise<SeasonUserStats>
+```
+
+### Parameters
+
+| Name | Type | Description |
+|------|------|-------------|
+| seasonId | `number` | ID of the season |
+| userAddress | `Address` | Address of the user |
+
+### Returns
+
+[SeasonUserStats](/api-reference/typescript-types#seasonuserstats) object containing user season stats.
+
+### Example
+
+```typescript
+const seasonId = await sdk.getCurrentSeasonId();
+const userStats = await sdk.getSeasonUserStats(seasonId, '0x1234...');
+console.log('Season referrals:', userStats.referrals);
+console.log('Season earnings:', userStats.earnings);
+```
+
+## listSeasons
+
+Lists all seasons.
+
+```typescript
+async listSeasons(): Promise<Season[]>
+```
+
+### Returns
+
+Array of [Season](/api-reference/typescript-types#season) objects.
+
+### Example
+
+```typescript
+const seasons = await sdk.listSeasons();
+console.log('Total seasons:', seasons.length);
+```
+
+## getSeasonCount
+
+Gets the total number of seasons.
+
+```typescript
+async getSeasonCount(): Promise<number>
+```
+
+### Returns
+
+`number` - Total season count.
+
+### Example
+
+```typescript
+const count = await sdk.getSeasonCount();
+console.log('Total seasons:', count);
+```

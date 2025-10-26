@@ -1,0 +1,171 @@
+---
+title: "Developer Workflow"
+description: "Learn how developers integrate and work with the CeloRefer SDK"
+---
+
+# Developer Workflow
+
+Understanding how developers integrate and work with the CeloRefer SDK.
+
+## 1. Install and Setup
+
+First, install the SDK and set up the client:
+
+```bash
+npm install celorefer-sdk viem
+```
+
+```typescript
+import { CeloReferSDK } from 'celorefer-sdk';
+import { createWalletClient, http } from 'viem';
+import { celoAlfajores } from 'viem/chains';
+
+const walletClient = createWalletClient({
+  chain: celoAlfajores,
+  transport: http('YOUR_RPC_URL'),
+  account: yourAccount // from privateKeyToAccount or browser wallet
+});
+
+const sdk = CeloReferSDK.create(celoAlfajores, walletClient);
+```
+
+## 2. Get Authorized as a Partner
+
+To record user actions, your dApp needs to be authorized by the platform owner:
+
+```typescript
+// Check if authorized partner
+const isPartner = await sdk.isAuthorizedPartner(partnerAddress);
+console.log('Is authorized partner:', isPartner);
+
+// Get partner subscription details
+const subscription = await sdk.getPartnerSubscription(partnerAddress);
+console.log('Subscription tier:', subscription.tier);
+```
+
+## 3. Integrate User Registration
+
+Integrate user registration into your onboarding flow:
+
+```typescript
+// Check if user is registered
+const userInfo = await sdk.getUserInfo(userAddress);
+const isRegistered = userInfo.referralCode !== '';
+
+if (!isRegistered) {
+  // Register user with referral code from URL params
+  const urlParams = new URLSearchParams(window.location.search);
+  const referralCode = urlParams.get('referral');
+  
+  if (referralCode) {
+    const txHash = await sdk.registerUser(referralCode);
+    console.log('Registration transaction:', txHash);
+  } else {
+    // Register as genesis user with custom code
+    const customCode = generateCustomCode(); // Your custom code generation logic
+    const txHash = await sdk.registerGenesisUser(customCode);
+    console.log('Genesis registration transaction:', txHash);
+  }
+}
+```
+
+## 4. Record User Actions
+
+Record user actions that should trigger referral rewards:
+
+```typescript
+// Check if authorized partner
+const isPartner = await sdk.isAuthorizedPartner(partnerAddress);
+
+if (isPartner) {
+  // Record an action worth 100 cUSD
+  const actionValue = BigInt(100 * 10**18); // Convert to wei
+  const txHash = await sdk.recordAction(userAddress, actionValue);
+  console.log('Action recorded:', txHash);
+}
+```
+
+## 5. Display User Information
+
+Show users their referral stats and earnings:
+
+```typescript
+const userInfo = await sdk.getUserInfo(userAddress);
+const userStats = await sdk.getUserStats(userAddress);
+const badgeInfo = sdk.getBadgeInfo(userInfo.badgeTier);
+
+console.log('Referral code:', userInfo.referralCode);
+console.log('Referral count:', userStats.totalReferrals);
+console.log('Total earnings:', userStats.totalEarnings);
+console.log('Badge tier:', badgeInfo.name);
+```
+
+## 6. Implement Quests
+
+Allow users to participate in quests:
+
+```typescript
+// Display available quests
+const quests = await sdk.listActiveQuests();
+
+// Show user progress on each quest
+for (const quest of quests) {
+  const progress = await sdk.getUserQuestProgress(userAddress, quest.id);
+  console.log(`Quest: ${quest.name}`);
+  console.log(`Progress: ${progress.progress}/${quest.targetReferrals}`);
+  
+  if (progress.completed && !progress.claimed) {
+    // Allow user to claim reward
+    const txHash = await sdk.claimQuestReward(quest.id);
+    console.log('Quest reward claimed:', txHash);
+  }
+}
+```
+
+## 7. Seasonal Competition Integration
+
+Integrate seasonal competitions:
+
+```typescript
+// Get current season
+const season = await sdk.getCurrentSeason();
+
+if (season.isActive) {
+  console.log('Current season:', season.name);
+  
+  // Get user's season stats
+  const seasonId = await sdk.getCurrentSeasonId();
+  const userStats = await sdk.getSeasonUserStats(seasonId, userAddress);
+  console.log('Season rank:', userStats.rank);
+  console.log('Season referrals:', userStats.referrals);
+}
+```
+
+## 8. Reputation NFT Integration
+
+Integrate reputation NFTs:
+
+```typescript
+// Check if user has NFT
+const hasNFT = await sdk.hasReputationNFT(userAddress);
+
+if (!hasNFT) {
+  // Allow user to mint NFT
+  const txHash = await sdk.mintReputationNFT(userAddress);
+  console.log('NFT minted:', txHash);
+} else {
+  // Get NFT data
+  const nftData = await sdk.getReputationNFTData(userAddress);
+  console.log('NFT Tier:', nftData.tier);
+  console.log('NFT Referrals:', nftData.referrals);
+  
+  // Generate SVG badge for display
+  const badgeSVG = sdk.generateBadgeSVG(
+    nftData.tier,
+    nftData.referrals,
+    nftData.earnings,
+    userRank // Get from leaderboard
+  );
+  // Use badgeSVG in your UI
+}
+```

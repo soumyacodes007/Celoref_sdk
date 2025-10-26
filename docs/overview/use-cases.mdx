@@ -1,0 +1,170 @@
+---
+title: "Use Cases"
+description: "Discover various use cases for CeloRefer across different industries"
+---
+
+# Use Cases
+
+CeloRefer's flexible referral and reputation system can be adapted to various industries and applications. Here are some key use cases:
+
+## 1. DeFi Protocols
+
+### Liquidity Mining Programs
+- Reward users who bring liquidity providers to pools
+- Create multi-level incentive structures for deeper liquidity
+- Track and reward liquidity provision across multiple pools
+
+### Yield Farming Platforms
+- Incentivize users to stake tokens and invite others
+- Build network effects through referral rewards
+- Create competitive farming seasons with leaderboards
+
+### Lending Protocols
+- Reward users who bring quality borrowers
+- Incentivize responsible lending through reputation systems
+- Create community-driven credit scoring
+
+## 2. NFT Marketplaces
+
+### Artist Onboarding
+- Reward collectors who onboard creators
+- Incentivize trading volume through referral programs
+- Grow user base virally with reputation NFTs
+
+### Collection Launches
+- Create buzz around new NFT collections
+- Reward early adopters who bring friends
+- Build community engagement through quests
+
+### Trading Platforms
+- Incentivize active trading through referral rewards
+- Create seasonal trading competitions
+- Build trader reputation through soulbound NFTs
+
+## 3. Gaming Platforms
+
+### Player Recruitment
+- Reward players who recruit teammates
+- Build guilds and communities through referral systems
+- Increase retention through social connections
+
+### Tournament Participation
+- Incentivize players to form competitive teams
+- Create leaderboard competitions with rewards
+- Build player reputation through achievements
+
+### In-Game Economies
+- Reward players who contribute to game ecosystems
+- Create referral incentives for in-game purchases
+- Build player status through reputation systems
+
+## 4. Social dApps
+
+### Content Creator Growth
+- Incentivize content creators to onboard followers
+- Reward community builders with referral income
+- Create viral growth loops through social sharing
+
+### Community Building
+- Reward moderators who grow healthy communities
+- Incentivize quality engagement through reputation
+- Create seasonal community challenges
+
+### Social Trading
+- Reward successful traders who bring followers
+- Build trader reputation through performance tracking
+- Create copy-trading incentive structures
+
+## 5. Education Platforms
+
+### Student Recruitment
+- Reward students who bring study groups
+- Incentivize course completions through referral rewards
+- Build learning communities with reputation systems
+
+### Instructor Onboarding
+- Reward platform users who bring quality educators
+- Create instructor reputation through student feedback
+- Build competitive learning environments
+
+### Course Engagement
+- Incentivize active participation in courses
+- Create learning milestones with quest rewards
+- Build student reputation through achievements
+
+## 6. E-commerce Platforms
+
+### Affiliate Marketing
+- Create multi-level affiliate programs
+- Reward customers who refer buyers
+- Build customer loyalty through reputation systems
+
+### Product Launches
+- Generate buzz around new products
+- Incentivize early adopters to share with networks
+- Create seasonal shopping competitions
+
+### Vendor Onboarding
+- Reward users who bring quality sellers
+- Build vendor reputation through customer reviews
+- Create competitive marketplace environments
+
+## Implementation with CeloRefer SDK
+
+All these use cases can be implemented using the CeloRefer SDK:
+
+```typescript
+import { CeloReferSDK } from 'celorefer-sdk';
+import { createWalletClient, http } from 'viem';
+import { celoAlfajores } from 'viem/chains';
+
+// Initialize SDK
+const walletClient = createWalletClient({
+  chain: celoAlfajores,
+  transport: http()
+});
+
+const sdk = CeloReferSDK.create(celoAlfajores, walletClient);
+
+// Register users with referral codes
+const txHash = await sdk.registerUser('REF123ABC');
+
+// Record user actions (for authorized partners)
+const isPartner = await sdk.isAuthorizedPartner(partnerAddress);
+if (isPartner) {
+  const actionValue = 1000000000000000000n; // 1 cUSD
+  const txHash = await sdk.recordAction(userAddress, actionValue);
+}
+
+// Create quests for user engagement
+// (Done by platform owner on the contract)
+
+// Track seasonal competitions
+const season = await sdk.getCurrentSeason();
+const seasonId = await sdk.getCurrentSeasonId();
+const userStats = await sdk.getSeasonUserStats(seasonId, userAddress);
+
+// Mint reputation NFTs for user achievements
+const hasNFT = await sdk.hasReputationNFT(userAddress);
+if (!hasNFT) {
+  const txHash = await sdk.mintReputationNFT(userAddress);
+}
+```
+
+## Implementation Benefits
+
+### For All Use Cases:
+✅ **Viral Growth**: Multi-level referral system drives exponential user acquisition
+✅ **Engagement**: Gamification through quests and seasons increases user retention
+✅ **Reputation**: Soulbound NFTs create portable, on-chain reputation
+✅ **Monetization**: Platform fees and subscription tiers create revenue streams
+✅ **Analytics**: Built-in leaderboards and tracking provide valuable insights
+✅ **Customization**: White-label support allows brand-specific implementations
+
+### Industry-Specific Advantages:
+- **DeFi**: Trustless, automated reward distribution
+- **NFT**: Unique, collectible reputation tokens
+- **Gaming**: Achievement-based progression systems
+- **Social**: Community-driven reputation building
+- **Education**: Learning milestone tracking
+- **E-commerce**: Performance-based affiliate rewards

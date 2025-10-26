@@ -1,0 +1,87 @@
+---
+title: "Quick Start"
+description: "Get started with CeloRefer SDK in minutes"
+---
+
+# Quick Start
+
+Get your CeloRefer integration up and running in minutes.
+
+## Prerequisites
+
+- Node.js >= 16.x
+- A Celo wallet with some cUSD for gas fees
+- A Celo node provider (Alchemy, Infura, or similar)
+
+## Installation
+
+```bash
+npm install celorefer-sdk viem
+```
+
+Or with other package managers:
+
+```bash
+yarn add celorefer-sdk viem
+pnpm add celorefer-sdk viem
+bun add celorefer-sdk viem
+```
+
+## Setup
+
+First, import the SDK and create a wallet client:
+
+```typescript
+import { CeloReferSDK } from 'celorefer-sdk';
+import { createWalletClient, http } from 'viem';
+import { celoAlfajores } from 'viem/chains';
+
+// Create wallet client
+const walletClient = createWalletClient({
+  chain: celoAlfajores,
+  transport: http('YOUR_RPC_URL'),
+  account: yourAccount // from privateKeyToAccount or browser wallet
+});
+
+// Initialize the SDK
+const sdk = CeloReferSDK.create(celoAlfajores, walletClient);
+```
+
+## Register a User
+
+```typescript
+// Register with a referral code
+const txHash = await sdk.registerUser('REF123ABC');
+console.log('Registration transaction hash:', txHash);
+
+// Register as genesis user (first user)
+const genesisTxHash = await sdk.registerGenesisUser('MYCODE');
+console.log('Genesis registration transaction hash:', genesisTxHash);
+```
+
+## Check User Information
+
+```typescript
+// Get user information
+const userInfo = await sdk.getUserInfo(userAddress);
+console.log('User info:', userInfo);
+
+// Get badge tier
+const badgeTier = await sdk.getBadgeTier(userAddress);
+console.log('Badge tier:', badgeTier);
+```
+
+## Record an Action (For Partners)
+
+```typescript
+// Record a user action (only authorized partners can call this)
+const actionValue = 1000000000000000000n; // 1 cUSD in wei
+const txHash = await sdk.recordAction(userAddress, actionValue);
+console.log('Action recorded:', txHash);
+```
+
+## Next Steps
+
+- Learn about [user workflows](/guides/user-workflow)
+- Understand [developer workflows](/guides/developer-workflow)
+- Explore the [API reference](/api-reference/introduction)

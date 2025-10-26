@@ -97,8 +97,5 @@ Desktop.ini
 # ==================
 # PROJECT SPECIFIC
 # ==================
-# Keep deployment logs
-!/broadcast
-
-# Ignore local docs build
-# docs/
+# Keep only specific deployment logs if needed
+# Example: !broadcast/Deploy.s.sol/11142220/run-latest.json

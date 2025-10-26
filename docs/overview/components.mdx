@@ -1,0 +1,179 @@
+---
+title: "Components"
+description: "Detailed overview of CeloRefer components"
+---
+
+# Components
+
+## 1. Smart Contracts
+
+### CeloReferEnhanced.sol
+The main referral system contract that handles:
+- User registration with referral codes
+- Two-level referral tree (direct referrer + parent referrer)
+- Dynamic reward distribution based on badge tiers
+- Quest system for milestone achievements
+- Seasonal competitions with prize pools
+- Partner authorization and platform fee management
+
+#### Key Functions
+- `registerUser(string referralCode)`: Register a new user with an optional referral code
+- `registerGenesisUser(string customCode)`: Register a genesis user with a custom code
+- `recordAction(address user, uint256 actionValue)`: Record a user action (partner-only)
+- `createQuest(...)`: Create a new quest (owner-only)
+- `createSeason(...)`: Create a new season (owner-only)
+- `authorizePartner(address partner, uint8 tier)`: Authorize a partner (owner-only)
+
+### ReputationNFT.sol
+A soulbound (non-transferable) NFT contract that:
+- Mints unique reputation NFTs for users
+- Represents on-chain reputation and achievement
+- Cannot be transferred (soulbound token)
+- Provides dynamic metadata based on user stats
+
+#### Key Functions
+- `mintNFT(address user)`: Mint a reputation NFT for a user
+- `getNFTData(address user)`: Get NFT data for a user
+- `generateBadgeSVG(...)`: Generate SVG badge for display
+
+## 2. CeloRefer SDK
+
+A TypeScript SDK built with **viem** that provides:
+- Easy integration with CeloRefer contracts
+- Type-safe contract interactions
+- Comprehensive API for all contract features
+- Support for read and write operations
+- Built for modern web3 development
+
+### Installation
+
+```bash
+npm install celorefer-sdk viem
+```
+
+### Initialization
+
+```typescript
+import { CeloReferSDK } from 'celorefer-sdk';
+import { createWalletClient, http } from 'viem';
+import { celoAlfajores } from 'viem/chains';
+
+const walletClient = createWalletClient({
+  chain: celoAlfajores,
+  transport: http('YOUR_RPC_URL')
+});
+
+const sdk = CeloReferSDK.create(celoAlfajores, walletClient);
+```
+
+### Core Modules
+
+#### User Management
+- `registerUser(referralCode: string)`: Register a new user
+- `registerGenesisUser(customCode: string)`: Register as genesis user
+- `getUserInfo(userAddress: Address)`: Get user information
+- `getBadgeTier(userAddress: Address)`: Get user's badge tier
+
+#### Referral Operations
+- `recordAction(userAddress: Address, actionValue: bigint)`: Record a user action
+- `getRewardRates(userAddress: Address)`: Get user reward rates
+
+#### Badge & Reputation
+- `getBadgeInfo(tier: number)`: Get badge information
+- `bpsToPercentage(bps: bigint)`: Convert basis points to percentage
+
+#### NFT Operations
+- `mintReputationNFT(userAddress: Address)`: Mint reputation NFT
+- `hasReputationNFT(userAddress: Address)`: Check if user has NFT
+- `getReputationNFTData(userAddress: Address)`: Get NFT data
+
+#### Quest System
+- `getQuest(questId: number)`: Get quest details
+- `getUserQuestProgress(userAddress: Address, questId: number)`: Get user progress
+- `claimQuestReward(questId: number)`: Claim quest reward
+- `listActiveQuests()`: List all active quests
+
+#### Seasonal Competitions
+- `getCurrentSeason()`: Get current season
+- `getSeasonUserStats(seasonId: number, userAddress: Address)`: Get user season stats
+- `listSeasons()`: List all seasons
+
+#### Partner Integration
+- `isAuthorizedPartner(partnerAddress: Address)`: Check if authorized partner
+- `getPartnerSubscription(partnerAddress: Address)`: Get partner subscription
+- `getPlatformFee()`: Get platform fee
+
+#### Leaderboard
+- `getTopUsers(limit: number)`: Get top users
+- `getUserRank(userAddress: Address)`: Get user rank
+
+#### Utilities
+- `generateReferralLink(referralCode: string)`: Generate referral link
+- `generateBadgeSVG(tier, referrals, earnings, rank)`: Generate badge SVG
+
+## Core Features
+
+### 🎯 Multi-Level Referral System
+
+**Two-tier referral tree:**
+- **Level 1 (Direct Referrer)**: Earns rewards when their direct referrals perform actions
+- **Level 2 (Parent Referrer)**: Earns rewards from their referrals' referrals
+
+**Dynamic reward rates based on badge tier:**
+- 🥉 **Bronze** (0+ referrals): 5% + 2%
+- 🥈 **Silver** (5+ referrals): 6% + 2.5%
+- 🥇 **Gold** (15+ referrals): 7% + 3%
+- 💎 **Platinum** (50+ referrals): 8% + 3.5%
+
+### 🏅 Badge & Reputation System
+
+Users earn badges based on their referral performance:
+- Badges unlock higher reward rates
+- Badge tier displayed in reputation NFTs
+- Visual representation of user achievement
+- Gamification encourages viral growth
+
+### 🎮 Quest System
+
+Create milestone-based challenges:
+- Set target referral counts
+- Offer cUSD rewards for completion
+- Track user progress automatically
+- Claim rewards on completion
+- Drive specific user behaviors
+
+### 🏆 Seasonal Competitions
+
+Run time-bound competitions:
+- Define season duration and prize pool
+- Track user performance during season
+- Distribute rewards to top performers
+- Create urgency and engagement spikes
+- Build community around leaderboards
+
+### 💎 Reputation NFTs (Soulbound)
+
+Mint on-chain reputation badges:
+- Unique NFT per user (soulbound - cannot be transferred)
+- Dynamic metadata reflecting current stats
+- Visual representation of achievements
+- Portable reputation across ecosystem
+- Proof of engagement and influence
+
+### 🤝 Partner Integration
+
+White-label support for dApps:
+- Authorize partner contracts to record actions
+- Platform fee system (default 15%)
+- Tiered subscription model (Free, Basic, Pro, Enterprise)
+- Customization levels based on tier
+- Revenue sharing through fees
+
+### 📊 Leaderboards & Analytics
+
+Track ecosystem performance:
+- Global user rankings
+- Referral counts and earnings
+- Contract statistics
+- Season-specific leaderboards
+- User quest progress

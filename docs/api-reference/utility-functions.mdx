@@ -1,0 +1,130 @@
+---
+title: "Utility Functions"
+description: "API reference for utility functions"
+---
+
+# Utility Functions
+
+Helper functions for common operations.
+
+## generateReferralLink
+
+Generates a referral link for sharing.
+
+```typescript
+generateReferralLink(referralCode: string): string
+```
+
+### Parameters
+
+| Name | Type | Description |
+|------|------|-------------|
+| referralCode | `string` | Referral code to include in the link |
+
+### Returns
+
+`string` - Complete referral link.
+
+### Example
+
+```typescript
+const link = sdk.generateReferralLink('REF123ABC');
+console.log('Referral link:', link);
+```
+
+## getBadgeInfo
+
+Gets information about a specific badge tier.
+
+```typescript
+getBadgeInfo(tier: number): BadgeInfo
+```
+
+### Parameters
+
+| Name | Type | Description |
+|------|------|-------------|
+| tier | `number` | Badge tier (0-3) |
+
+### Returns
+
+[BadgeInfo](/api-reference/typescript-types#badgeinfo) object containing badge details.
+
+### Example
+
+```typescript
+const badgeInfo = sdk.getBadgeInfo(2); // Gold badge
+console.log('Badge name:', badgeInfo.name);
+```
+
+## bpsToPercentage
+
+Converts basis points to percentage.
+
+```typescript
+bpsToPercentage(bps: bigint): number
+```
+
+### Parameters
+
+| Name | Type | Description |
+|------|------|-------------|
+| bps | `bigint` | Value in basis points |
+
+### Returns
+
+`number` - Percentage value.
+
+### Example
+
+```typescript
+const percentage = sdk.bpsToPercentage(500n); // 500 basis points = 5%
+console.log('Percentage:', percentage);
+```
+
+## getContractStats
+
+Gets contract statistics.
+
+```typescript
+async getContractStats(): Promise<ContractStats>
+```
+
+### Returns
+
+[ContractStats](/api-reference/typescript-types#contractstats) object containing contract statistics.
+
+### Example
+
+```typescript
+const stats = await sdk.getContractStats();
+console.log('Contract stats:', stats);
+```
+
+## generateBadgeSVG
+
+Generates an SVG badge for display.
+
+```typescript
+generateBadgeSVG(tier: number, referrals: number, earnings: bigint, rank: number): string
+```
+
+### Parameters
+
+| Name | Type | Description |
+|------|------|-------------|
+| tier | `number` | Badge tier |
+| referrals | `number` | Number of referrals |
+| earnings | `bigint` | Total earnings in wei |
+| rank | `number` | User's rank |
+
+### Returns
+
+`string` - Data URI of the SVG badge.
+
+### Example
+
+```typescript
+const svg = sdk.generateBadgeSVG(2, 25, 1000000000000000000n, 5);
+// Use this SVG in your UI
+```

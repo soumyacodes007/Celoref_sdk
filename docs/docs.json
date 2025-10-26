@@ -1,0 +1,126 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "name": "CeloRefer SDK",
+  "theme": "mint",
+  "colors": {
+    "primary": "#35D07F",
+    "light": "#72F3AE",
+    "dark": "#1A9E5D"
+  },
+  "favicon": "/favicon.svg",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Overview",
+        "groups": [
+          {
+            "group": "Introduction",
+            "pages": [
+              "index",
+              "overview/about",
+              "overview/use-cases",
+              "overview/token-economics"
+            ]
+          },
+          {
+            "group": "Architecture",
+            "pages": [
+              "overview/architecture",
+              "overview/components"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Guides",
+        "groups": [
+          {
+            "group": "Getting Started",
+            "pages": [
+              "guides/quickstart",
+              "guides/installation"
+            ]
+          },
+          {
+            "group": "Integration",
+            "pages": [
+              "guides/user-workflow",
+              "guides/developer-workflow",
+              "guides/platform-workflow"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "API Reference",
+        "groups": [
+          {
+            "group": "Core Modules",
+            "pages": [
+              "api-reference/introduction",
+              "api-reference/user-management",
+              "api-reference/referral-operations",
+              "api-reference/badge-reputation",
+              "api-reference/nft-operations"
+            ]
+          },
+          {
+            "group": "Advanced Features",
+            "pages": [
+              "api-reference/quest-system",
+              "api-reference/seasonal-competitions",
+              "api-reference/partner-integration",
+              "api-reference/leaderboard"
+            ]
+          },
+          {
+            "group": "Utilities",
+            "pages": [
+              "api-reference/utility-functions",
+              "api-reference/typescript-types"
+            ]
+          }
+        ]
+      }
+    ],
+    "global": {
+      "anchors": [
+        {
+          "anchor": "GitHub",
+          "href": "https://github.com/celorefer",
+          "icon": "github"
+        }
+      ]
+    }
+  },
+  "logo": {
+    "light": "/logo/light.svg",
+    "dark": "/logo/dark.svg"
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "Support",
+        "href": "mailto:support@celorefer.com"
+      }
+    ],
+    "primary": {
+      "type": "button",
+      "label": "Dashboard",
+      "href": "https://dashboard.celorefer.com"
+    }
+  },
+  "contextual": {
+    "options": [
+      "copy",
+      "view"
+    ]
+  },
+  "footer": {
+    "socials": {
+      "x": "https://x.com/celorefer",
+      "github": "https://github.com/celorefer",
+      "discord": "https://discord.gg/celorefer"
+    }
+  }
+}

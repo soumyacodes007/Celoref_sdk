@@ -1,0 +1,129 @@
+---
+title: "Partner Integration"
+description: "API reference for partner authorization and management"
+---
+
+# Partner Integration
+
+Methods for partner authorization and management.
+
+## isAuthorizedPartner
+
+Checks if an address is an authorized partner.
+
+```typescript
+async isAuthorizedPartner(partnerAddress: Address): Promise<boolean>
+```
+
+### Parameters
+
+| Name | Type | Description |
+|------|------|-------------|
+| partnerAddress | `Address` | Address to check |
+
+### Returns
+
+`boolean` - True if authorized, false otherwise.
+
+### Example
+
+```typescript
+const isPartner = await sdk.isAuthorizedPartner('0x5678...');
+console.log('Is partner:', isPartner);
+```
+
+## getPartnerSubscription
+
+Gets subscription details for a partner.
+
+```typescript
+async getPartnerSubscription(partnerAddress: Address): Promise<PartnerSubscription>
+```
+
+### Parameters
+
+| Name | Type | Description |
+|------|------|-------------|
+| partnerAddress | `Address` | Address of the partner |
+
+### Returns
+
+[PartnerSubscription](/api-reference/typescript-types#partnersubscription) object containing subscription details.
+
+### Example
+
+```typescript
+const subscription = await sdk.getPartnerSubscription('0x5678...');
+console.log('Subscription tier:', subscription.tier);
+console.log('Expiry time:', subscription.expiryTime);
+```
+
+## getPlatformFee
+
+Gets the current platform fee percentage.
+
+```typescript
+async getPlatformFee(): Promise<number>
+```
+
+### Returns
+
+`number` - Platform fee percentage in basis points (e.g., 1500 = 15%).
+
+### Example
+
+```typescript
+const fee = await sdk.getPlatformFee();
+console.log('Platform fee:', fee / 100, '%');
+```
+
+## getTreasury
+
+Gets the treasury address.
+
+```typescript
+async getTreasury(): Promise<Address>
+```
+
+### Returns
+
+`Address` - Treasury address.
+
+### Example
+
+```typescript
+const treasury = await sdk.getTreasury();
+console.log('Treasury address:', treasury);
+```
+
+## recordAction
+
+Records a user action that triggers referral rewards (partner-only method).
+
+```typescript
+async recordAction(userAddress: Address, actionValue: bigint): Promise<Hex>
+```
+
+### Parameters
+
+| Name | Type | Description |
+|------|------|-------------|
+| userAddress | `Address` | Address of the user performing the action |
+| actionValue | `bigint` | Value of the action in wei |
+
+### Returns
+
+`Hex` - Transaction hash of the action recording.
+
+### Example
+
+```typescript
+// Check if authorized partner
+const isPartner = await sdk.isAuthorizedPartner(partnerAddress);
+
+if (isPartner) {
+  const actionValue = 1000000000000000000n; // 1 cUSD
+  const txHash = await sdk.recordAction('0x1234...', actionValue);
+  console.log('Action recorded:', txHash);
+}
+```
