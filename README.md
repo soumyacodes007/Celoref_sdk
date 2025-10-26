@@ -22,12 +22,25 @@ Turn every user into an ambassador. Track referrals on-chain. Reward growth auto
 
 ## 📜 Deployed Contracts
 
+### Celo Alfajores Testnet
+
 <div align="center">
 
-| Contract | Network | Address |
+| Contract | Address | Explorer |
 |----------|---------|----------|
-| **CeloReferEnhanced** | Celo Alfajores | [`0x180a9b92653819d8B0e724AF3320Ffbe4b4170e8`](https://celo-alfajores.blockscout.com/address/0x180a9b92653819d8B0e724AF3320Ffbe4b4170e8) |
-| **ReputationNFT** | Celo Alfajores | [`0xeCE0f83Ff830FD139665349BA391e2ADE19DcED6`](https://celo-alfajores.blockscout.com/address/0xeCE0f83Ff830FD139665349BA391e2ADE19DcED6) |
+| **CeloReferEnhanced** | `0x180a9b92653819d8B0e724AF3320Ffbe4b4170e8` | [View on Blockscout →](https://celo-alfajores.blockscout.com/address/0x180a9b92653819d8B0e724AF3320Ffbe4b4170e8) |
+| **ReputationNFT** | `0xeCE0f83Ff830FD139665349BA391e2ADE19DcED6` | [View on Blockscout →](https://celo-alfajores.blockscout.com/address/0xeCE0f83Ff830FD139665349BA391e2ADE19DcED6) |
+
+</div>
+
+### Celo Sepolia Testnet
+
+<div align="center">
+
+| Contract | Address | Explorer |
+|----------|---------|----------|
+| **CeloReferEnhanced** | `0xCCAddAC9Ac91D548ada36684dB2b3796A0c7Ea73` | [View on Celoscan →](https://sepolia.celoscan.io/address/0xccaddac9ac91d548ada36684db2b3796a0c7ea73) |
+| **ReputationNFT** | `0xe667437aF0424Ee9cb983b755Ccccf218779E37b` | [View on Celoscan →](https://sepolia.celoscan.io/address/0xe667437af0424ee9cb983b755ccccf218779e37b) |
 
 </div>
 
