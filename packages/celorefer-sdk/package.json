@@ -1,0 +1,51 @@
+{
+  "name": "celorefer-sdk",
+  "version": "1.0.2",
+  "description": "SDK for the CeloRefer referral system - Build referral programs on Celo blockchain",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest",
+    "test:live": "tsx test-sdk-live.ts",
+    "validate": "tsx validate-sdk.ts",
+    "lint": "eslint src --ext .ts",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "celo",
+    "referral",
+    "web3",
+    "blockchain",
+    "defi",
+    "sdk"
+  ],
+  "author": "CeloRefer Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/celorefer/celo-hackathon.git",
+    "directory": "packages/celorefer-sdk"
+  },
+  "homepage": "https://github.com/celorefer/celo-hackathon#readme",
+  "bugs": {
+    "url": "https://github.com/celorefer/celo-hackathon/issues"
+  },
+  "dependencies": {
+    "abitype": "^0.9.8",
+    "viem": "^2.38.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "eslint": "^8.0.0",
+    "tsup": "^7.0.0",
+    "tsx": "^4.7.0",
+    "typescript": "^5.0.0",
+    "vitest": "^0.34.0"
+  }
+}

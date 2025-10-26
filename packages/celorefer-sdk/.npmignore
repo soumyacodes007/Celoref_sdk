@@ -1,0 +1,33 @@
+# Source files
+src/
+*.ts
+!*.d.ts
+
+# Tests
+__tests__/
+*.test.ts
+*.spec.ts
+test-*.ts
+vitest.config.ts
+
+# Examples and demos
+examples/
+demo*.ts
+demo*.js
+
+# Documentation (keep only README.md)
+*.md
+!README.md
+
+# Build configs
+tsconfig.json
+tsup.config.ts
+
+# Development files
+.gitignore
+.eslintrc.*
+
+# Node modules and logs
+node_modules/
+*.log
+npm-debug.log*
