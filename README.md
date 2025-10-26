@@ -14,7 +14,7 @@ Turn every user into an ambassador. Track referrals on-chain. Reward growth auto
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![npm version](https://img.shields.io/npm/v/celorefer-sdk.svg)](https://www.npmjs.com/package/celorefer-sdk)
 
-[Demo](#) • [Documentation](https://celoref.mintlify.app/api-reference/introduction) • [npm Package](https://www.npmjs.com/package/celorefer-sdk)
+[📺 Video Demo](https://youtu.be/B06XrEgMdjg) • [Documentation](https://celoref.mintlify.app/api-reference/introduction) • [npm Package](https://www.npmjs.com/package/celorefer-sdk)
 
 </div>
 
@@ -70,10 +70,12 @@ Celo has **3M+ MiniPay users** with phone numbers already mapped to wallets via 
    - Type-safe viem-based blockchain interactions
    - Published on npm, production-ready
 
-3. **Frontend Demo** (Next.js + Tailwind)
+3. **Frontend Demo DApp** (HTML/CSS/JS + ethers.js)
+   - Live working demo at `celo-dapp/frontend/`
    - User dashboard with referral tracking
    - Quest progress & seasonal leaderboards
-   - NFT reputation display
+   - NFT reputation display with animated badges
+   - Staking functionality and admin panel
 
 4. **Comprehensive Documentation**
    - Full API reference: https://celoref.mintlify.app
@@ -92,6 +94,55 @@ The CeloRefer SDK simplifies building decentralized referral programs on Celo:
 - **Leaderboard** - Real-time rankings and social proof
 
 **Result:** Create viral growth loops powered by crypto incentives
+
+---
+
+## 🎨 Visual Overview
+
+### Demo DApp Screenshots
+
+<div align="center">
+  <table>
+    <tr>
+      <td width="50%">
+        <img src="wireframes/herosectionpic.png" alt="Hero Section" />
+        <p align="center"><em>Landing page with referral system overview</em></p>
+      </td>
+      <td width="50%">
+        <img src="wireframes/pictureofbadgesystem.png" alt="Badge System" />
+        <p align="center"><em>Dynamic NFT badge collection (Bronze to Platinum)</em></p>
+      </td>
+    </tr>
+  </table>
+</div>
+
+### Published SDK
+
+<div align="center">
+  <img src="wireframes/pictureofpublishedpckg.png" alt="Published Package" width="600" />
+  <p><em>Production-ready SDK published on npm</em></p>
+</div>
+
+### 📺 Video Demo
+
+**[Watch the full demo walkthrough on YouTube →](https://youtu.be/B06XrEgMdjg)**
+
+See CeloRefer in action: user registration, badge progression, quest system, staking, and admin features.
+
+### Demo DApp Highlights
+
+Our frontend demo (`celo-dapp/`) showcases real SDK usage:
+
+- **🎯 Complete Integration Example** - Shows all major SDK functions in action
+- **💎 Animated NFT Badges** - Dynamic tier-based badges (Bronze, Silver, Gold, Platinum)
+- **📊 Live Dashboard** - Real-time stats, referral codes, and leaderboards
+- **🎮 Quest System UI** - Track progress and claim rewards
+- **⚡ Staking Demo** - cUSD token staking interface
+- **🔧 Admin Panel** - Partner management and configuration
+
+**Technology Stack:** Pure HTML/CSS/JavaScript + ethers.js v6.7.0 for blockchain interactions
+
+**Try it:** `cd celo-dapp/frontend && http-server -p 8080`
 
 ---
 
@@ -280,9 +331,19 @@ celo-hackathon/
 │       ├── src/              # SDK source code
 │       ├── validate-sdk.ts   # Comprehensive test suite
 │       └── README.md         # SDK documentation
-├── frontend/                 # Next.js demo application
-│   ├── src/app/              # App router pages
-│   └── src/components/       # React components
+├── celo-dapp/                # Demo DApp (HTML/CSS/JS)
+│   ├── frontend/             # Frontend application
+│   │   ├── index.html        # Landing page
+│   │   ├── app/index.html    # Main dashboard
+│   │   ├── css/              # Stylesheets (badge NFTs, etc.)
+│   │   └── js/app.js         # SDK integration example
+│   ├── contracts/            # Deployed contract ABIs
+│   ├── sdk/                  # Local SDK copy
+│   └── README.md             # Demo setup guide
+├── wireframes/               # Visual documentation
+│   ├── herosectionpic.png
+│   ├── pictureofbadgesystem.png
+│   └── pictureofpublishedpckg.png
 ├── docs/                     # Mintlify documentation
 ├── script/                   # Foundry deployment scripts
 └── test/                     # Smart contract tests (Foundry)
@@ -350,6 +411,8 @@ celo-hackathon/
 
 ### How to Validate
 
+**📺 Watch the [video demo](https://youtu.be/B06XrEgMdjg) first**, then:
+
 ```bash
 # 1. Clone repository
 git clone <repo-url>
@@ -405,6 +468,6 @@ This project leverages Celo's unique advantages:
 
 **Built with ❤️ for the Celo ecosystem**
 
-[Demo](#) • [Documentation](https://celoref.mintlify.app/api-reference/introduction) • [npm Package](https://www.npmjs.com/package/celorefer-sdk)
+[📺 Video Demo](https://youtu.be/B06XrEgMdjg) • [Documentation](https://celoref.mintlify.app/api-reference/introduction) • [npm Package](https://www.npmjs.com/package/celorefer-sdk)
 
 </div>
