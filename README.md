@@ -20,6 +20,19 @@ Turn every user into an ambassador. Track referrals on-chain. Reward growth auto
 
 ---
 
+## 📜 Deployed Contracts
+
+<div align="center">
+
+| Contract | Network | Address |
+|----------|---------|----------|
+| **CeloReferEnhanced** | Celo Alfajores | [`0x180a9b92653819d8B0e724AF3320Ffbe4b4170e8`](https://celo-alfajores.blockscout.com/address/0x180a9b92653819d8B0e724AF3320Ffbe4b4170e8) |
+| **ReputationNFT** | Celo Alfajores | [`0xeCE0f83Ff830FD139665349BA391e2ADE19DcED6`](https://celo-alfajores.blockscout.com/address/0xeCE0f83Ff830FD139665349BA391e2ADE19DcED6) |
+
+</div>
+
+---
+
 ## 🔥 The Problem & Why Celo Needs This
 
 ### Web3 Growth is Broken
@@ -272,9 +285,9 @@ npm run validate
 - ✅ Token Operations (1 test)
 - ✅ Leaderboard (3 tests)
 
-**Live Smart Contracts on Celo Sepolia:**
-- CeloReferEnhanced: [`0xCCAd...Ea73`](https://alfajores.celoscan.io/address/0xCCAddAC9Ac91D548ada36684dB2b3796A0c7Ea73)
-- ReputationNFT: [`0xe667...E37b`](https://alfajores.celoscan.io/address/0xe667437aF0424Ee9cb983b755Ccccf218779E37b)
+**Live Smart Contracts on Celo Alfajores:**
+- CeloReferEnhanced: [`0x180a...70e8`](https://celo-alfajores.blockscout.com/address/0x180a9b92653819d8B0e724AF3320Ffbe4b4170e8)
+- ReputationNFT: [`0xeCE0...cED6`](https://celo-alfajores.blockscout.com/address/0xeCE0f83Ff830FD139665349BA391e2ADE19DcED6)
 
 ---
 
@@ -424,7 +437,7 @@ npm install
 npm run validate
 
 # 3. View contracts on explorer
-open https://alfajores.celoscan.io/address/0xCCAddAC9Ac91D548ada36684dB2b3796A0c7Ea73
+open https://celo-alfajores.blockscout.com/address/0x180a9b92653819d8B0e724AF3320Ffbe4b4170e8
 
 # 4. Check npm package
 open https://www.npmjs.com/package/celorefer-sdk
